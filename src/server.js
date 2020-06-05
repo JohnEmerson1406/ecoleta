@@ -15,7 +15,9 @@ nunjucks.configure("src/views", {
 
 // pagina inicial
 server.get("/", (req, res) => {
-    return res.render("index.html")
+    return res.render("index.html", {
+        title: "Seu marketplace de coleta de resíduos"
+    })
 })
 
 // outras rotas
