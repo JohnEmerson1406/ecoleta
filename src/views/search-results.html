@@ -16,6 +16,7 @@
 {% include "partials/page-header.html" %}
 
 <main>
+    {% if total > 0 %}
     <h4>
         <strong>{{ total }} pontos</strong> encontrados
     </h4>
@@ -38,5 +39,11 @@
         {% endfor %}
 
     </div>
+
+    {% else %}
+    <h4><strong>Nenhum</strong> local encontrado</h4>
+
+    {% endif %}
+    
 </main>
 {% endblock content %}
