@@ -25,7 +25,14 @@ server.get("/", (req, res) => {
 
 // outras rotas
 server.get("/create-point", (req, res) => {
+
+    // req.query: query string da url
+
     return res.render("create-point.html")
+})
+
+server.post("/savepoint", (req, res) => {
+    return res.send("ok")
 })
 
 server.get("/search-results", (req, res) => {
