@@ -29,7 +29,16 @@ server.get("/create-point", (req, res) => {
 })
 
 server.get("/search-results", (req, res) => {
-    return res.render("search-results.html")
+
+    // pegar os dados do banco de dados
+    db.all(`SELECT * FROM places`, function (err, rows) {
+        if (err) {
+            return console.log(err)
+        }
+
+        return res.render("search-results.html", { places: rows })
+    })
+
 })
 
 // ligar o servidor
