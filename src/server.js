@@ -4,6 +4,9 @@ const server = express()
 // pegar o banco de dados
 const db = require("./database/db")
 
+// habilitar o uso do req.body na aplicação
+server.use(express.urlencoded({ extended: true }))
+
 // configurar pasta public
 server.use(express.static("public"))
 
@@ -32,7 +35,42 @@ server.get("/create-point", (req, res) => {
 })
 
 server.post("/savepoint", (req, res) => {
-    return res.send("ok")
+
+    // inserir dados no db
+    const query = `
+        INSERT INTO places (
+            image,
+            name,
+            address,
+            address2,
+            state,
+            city,
+            items
+        ) VALUES (?,?,?,?,?,?,?);
+    `
+
+    const values = [
+        req.body.image,
+        req.body.name,
+        req.body.address,
+        req.body.address2,
+        req.body.state,
+        req.body.city,
+        req.body.items
+    ]
+
+    function afterInsertData(err) {
+        if (err) {
+            return console.log(err)
+        }
+
+        console.log("Cadastrado com sucesso")
+        console.log(this)
+
+        return res.render("create-point.html", { saved: true })
+    }
+
+    db.run(query, values, afterInsertData)
 })
 
 server.get("/search-results", (req, res) => {
